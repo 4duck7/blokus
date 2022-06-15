@@ -13,6 +13,16 @@ class Game {
         this.camera.lookAt(this.scene.position)
 
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+        this.loader = new THREE.GLTFLoader()
+        this.loader.load('../models/char.glb', function (glb) {
+            console.log(glb)
+            const root = glb.scene;
+            this.scene.add(root)
+        }, function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) = "%loaded")
+        }, function (error) {
+            console.log('an Error occured')
+        })
 
         // this.axes = new THREE.AxesHelper(100)
         // this.scene.add(this.axes)
