@@ -1,0 +1,100 @@
+:root {
+    --primary-color: #ff3399;
+    --secondary-color: #1e90ff;
+
+    --white: #ffffff;
+    --black: #000000;
+}
+
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.module {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    /* background-color: rgba(255, 51, 153, 0.5); */
+}
+
+.rel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.info-module {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 40px 180px;
+
+    text-align: center;
+    font-size: 22px;
+
+    background: white;
+
+}
+
+.info-module * {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.info-module h2 {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.info-module p {
+    font-size: 16px;
+}
+
+.info-module button {
+    margin: 20px 0px;
+}
+
+.info-module input {
+    padding: 3px 8px;
+    font-size: 18px;
+    width: 260px;
+    text-align: center;
+    margin: 0 auto;
+    border: 0px solid transparent;
+    border-bottom: 1px solid var(--secondary-color);
+    margin-bottom: 30px;
+    /* color: var(--primary-color); */
+}
+
+.ui-btn {
+    font-size: 18px;
+    padding: 8px 36px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background: transparent;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.ui-btn:hover {
+    color: white;
+    background: var(--primary-color);
+    border: 1px solid white;
+}
+
+#console {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+
+    color: var(--primary-color)
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Jakub Zieliński, Maria Hućko 3I1" />
+    <title>Blokus</title>
+
+    <link rel="stylesheet" href="../style/style.css" />
+
+    <script src="../script/modules/jq.js"></script>
+    <script src="../script/modules/three.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.7.0/Tween.js"></script>
+
+    <script src="../script/Light.js"></script>
+    <script src="../script/Cube.js"></script>
+    <script src="../script/Shape.js"></script>
+
+    <script src="../script/Game.js"></script>
+    <script src="../script/Net.js"></script>
+    <script src="../script/Ui.js"></script>
+
+    <script src="../script/main.js" defer></script>
+</head>
+
+<body>
+
+    <div class="module" id="oczekiwanie">
+        <div class="rel">
+            <div class="info-module">
+                <h2>Poczekaj</h2>
+                <p>Kolejny gracz się loguje.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="module" id="kamera">
+        <div class="rel">
+            <div class="info-module">
+                <h2>Kamera</h2>
+                <p>Mozesz poruszac kamerą z uzyciem myszy.</p>
+                <button class="ui-btn" id="ok">ok</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="module" id="logowanie">
+        <div class="rel">
+            <div class="info-module" id="login">
+                <h2 class="label">Sign in</h2>
+                <input type="text" name="userLog" id="userLog" placeholder="username">
+                <button class="ui-btn" id="play">Login</button>
+                <button class="ui-btn" id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="console">console</div>
+
+    <div id="canvas"></div>
+
+</body>
+
+</html>
