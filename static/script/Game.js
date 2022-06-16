@@ -300,8 +300,10 @@ class Game {
             for (let z = 0; z < this.tab[x].length; z++) {
                 if (this.tab[x][z] == this.color) {
                     if (this.tab[x + 1]?.[z] != null && this.tab[x - 1]?.[z] != null && this.tab[x]?.[z + 1] != null && this.tab[x]?.[z - 1] != null) {
+
                         this.numberOfDisabledBlocks++;
                         console.warn(this.numberOfDisabledBlocks, this.playerBlocksPlaced);
+
                     }
 
                 }
