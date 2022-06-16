@@ -109,14 +109,9 @@ function requestmove(req, res) {
                 res.end(JSON.stringify({ x: null, z: null, color: null }))
             }
 
-
-
         } else {
             res.end(data)
         }
-
-
-
 
     })
 }
