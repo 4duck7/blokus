@@ -185,19 +185,17 @@ class Game {
 
                             let canDeploy = false;
 
-                            // if (this.tab[intel[1] + 1]?.[intel[2]] == undefined || this.tab[intel[1] + 1]?.[intel[2]] == this.color) canDeploy = true;
-                            // if (this.tab[intel[1] - 1]?.[intel[2]] == undefined || this.tab[intel[1] - 1]?.[intel[2]] == this.color) canDeploy = true;
-                            // if (this.tab[intel[1]]?.[intel[2] + 1] == undefined || this.tab[intel[1]]?.[intel[2] + 1] == this.color) canDeploy = true;
-                            // if (this.tab[intel[1]]?.[intel[2] - 1] == undefined || this.tab[intel[1]]?.[intel[2] - 1] == this.color) canDeploy = true;
+                            let x = parseInt(intel[1]);
+                            let z = parseInt(intel[2]);
 
-                            console.log(intel[1])
+                            if (this.tab[x + 1]?.[z] == this.color) canDeploy = true;
+                            if (this.tab[x - 1]?.[z] == this.color) canDeploy = true;
+                            if (this.tab[x]?.[z + 1] == this.color) canDeploy = true;
+                            if (this.tab[x]?.[z - 1] == this.color) canDeploy = true;
 
-                            if ((intel[1] != 0 && intel[2] != 14) && (intel[1] != 14 && intel[2] != 0)) {
-                                if (game.tab[intel[1] + 1][intel[2]] == this.color) canDeploy = true; console.log(game.tab[intel[1] + 1]?.[intel[2]]);
-                                if (game.tab[intel[1] - 1][intel[2]] == this.color) canDeploy = true; console.log(game.tab[intel[1] - 1]?.[intel[2]]);
-                                if (game.tab[intel[1]][intel[2] + 1] == this.color) canDeploy = true; console.log(game.tab[intel[1]]?.[intel[2] + 1]);
-                                if (game.tab[intel[1]][intel[2] - 1] == this.color) canDeploy = true; console.log(game.tab[intel[1]]?.[intel[2] - 1]);
-                            }
+
+                            // if (this.tab[intel[1]]?.[intel[2]] == null) canDeploy = true; console.log(this.tab[intel[1]]?.[intel[2]])
+
                             if (canDeploy) {
                                 net.sendMove(intel[1], intel[2], this.color)
                                 this.playerBlocksPlaced++;
