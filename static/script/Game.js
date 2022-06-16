@@ -146,7 +146,7 @@ class Game {
 
                 parent.position.set(-(position.x / 2), 0, -(position.y / 2));
 
-                this.tab[x][y] = null
+                this.tab[x][y] = 3
             }
         }
 
@@ -174,7 +174,7 @@ class Game {
                 if (collider.name.startsWith('tile')) {
                     let intel = collider.name.split('-')
 
-                    if (this.tab[intel[1]][intel[2]] == null) {
+                    if (this.tab[intel[1]][intel[2]] == 3) {
                         if (this.playerBlocksPlaced == 0) {
                             if ((intel[1] == 0 || intel[2] == 14) || (intel[1] == 14 || intel[2] == 0)) {
                                 net.sendMove(intel[1], intel[2], this.color)
@@ -244,9 +244,6 @@ class Game {
                     collider.material = this.materials.tiles.hover
                 }
 
-                this.detectVictory()
-
-
             }
 
         }
@@ -272,7 +269,7 @@ class Game {
         pionki.forEach(pon => {
             if (pon.name == 'pon-' + x + '-' + z) {
 
-                if (this.tab[x][z] == null) {
+                if (this.tab[x][z] == 3) {
                     const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
                     switch (color) {
                         case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
@@ -299,7 +296,7 @@ class Game {
         for (let x = 0; x < this.tab.length; x++) {
             for (let z = 0; z < this.tab[x].length; z++) {
                 if (this.tab[x][z] == this.color) {
-                    if (this.tab[x + 1]?.[z] != null && this.tab[x - 1]?.[z] != null && this.tab[x]?.[z + 1] != null && this.tab[x]?.[z - 1] != null) {
+                    if (this.tab[x + 1]?.[z] != 3 && this.tab[x - 1]?.[z] != 3 && this.tab[x]?.[z + 1] != 3 && this.tab[x]?.[z - 1] != 3) {
 
                         this.numberOfDisabledBlocks++;
                         console.warn(this.numberOfDisabledBlocks, this.playerBlocksPlaced);
@@ -313,7 +310,8 @@ class Game {
         if (this.playerBlocksPlaced > 5) {
             if (this.numberOfDisabledBlocks == this.playerBlocksPlaced) {
                 this.defeat = true
-                alert('defeat')
+                net.sendDefeat()
+                console.error('defeat')
             }
         }
 

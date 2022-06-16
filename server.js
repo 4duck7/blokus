@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express")
 const path = require("path")
 const app = express()
@@ -18,6 +19,9 @@ let recentMove;
 
 let playerTurn = getRandomInt(2)
 let ruchy = 0
+
+let winner = 10;
+let loser = 10;
 
 app.use(express.static('static'))
 
@@ -107,6 +111,8 @@ function requestmove(req, res) {
     req.on('end', () => {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
 
+
+
         if (upcomingMoves.length > 0) {
 
             console.log(data)
@@ -115,9 +121,9 @@ function requestmove(req, res) {
             let object = upcomingMoves[0]
             object.turn = playerTurn
 
+
             if (object != recentMove) {
                 recentMove = object
-
 
                 console.log(object)
 
@@ -136,6 +142,40 @@ function requestmove(req, res) {
     })
 }
 
+function requestWinner(req, res) {
+    let data = ''
+    req.on('data', chunk => { data += chunk })
+    req.on('end', () => {
+        res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
+        let json = JSON.parse(data)
+
+        if (json.color == winner) {
+            res.end(JSON.stringify({ win: true }))
+        } else if (json.color == loser) {
+            res.end(JSON.stringify({ win: false }))
+        } else {
+            res.end(data);
+        }
+
+    })
+}
+
+function handleVictory(req, res) {
+    let data = ''
+    req.on('data', chunk => { data += chunk })
+    req.on('end', () => {
+        res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
+        let json = JSON.parse(data)
+
+        switch (json.loser) {
+            case 0: winner = 1; loser = json.loser; break;
+            case 1: winner = 0; loser = json.loser; break;
+        }
+
+        res.end(data)
+    })
+}
+
 //tu wszystkie app.post
 app.post("/reset", (req, res) => {
     users = []
@@ -150,6 +190,8 @@ app.post("/reset", (req, res) => {
 })
 app.post('/login', (req, res) => logowanie(req, res));
 app.post('/requestmove', (req, res) => requestmove(req, res));
+app.post('/requestwinner', (req, res) => requestWinner(req, res));
 app.post('/move', (req, res) => ruch(req, res));
+app.post('/defeat', (req, res) => handleVictory(req, res))
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + "/static/html/index.html")));
 app.listen(port, () => console.log("start serwera na porcie " + port))

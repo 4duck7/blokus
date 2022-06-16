@@ -47,6 +47,7 @@ class Net {
             }
 
             this.requestMove();
+            this.requestWinner();
 
         }
     }
@@ -117,7 +118,38 @@ class Net {
     }
 
     sendDefeat = () => {
+        let data = { loser: game.color }
 
+
+        fetch("/defeat", { method: "post", body: JSON.stringify(data) })
+            .then(response => response.json())
+            .then(json => { })
+            .catch(error => console.log(error));
+    }
+
+    requestWinner = () => {
+
+        let repeat = setInterval(() => {
+            let data = { color: game.color }
+            fetch("/requestwinner", { method: "post", body: JSON.stringify(data) })
+                .then(response => response.json())
+                .then(json => {
+
+                    switch (json.win) {
+                        case true:
+                            ui.tura.style.display = 'none'
+                            document.querySelector('#win').style.display = 'block'
+                            this.toggleHold = true;
+                            break;
+                        case false:
+                            ui.tura.style.display = 'none'
+                            document.querySelector('#defeat').style.display = 'block'
+                            this.toggleHold = true;
+                            break;
+                    }
+                })
+                .catch(error => console.log(error));
+        }, 250)
     }
 
 }
