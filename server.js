@@ -186,6 +186,9 @@ app.post("/reset", (req, res) => {
     player2visits = 0
     kolor = ['niebieskimi', 'rozowymi']
     upcomingMoves = []
+    ruchy = 0
+    winner = 10;
+    loser = 10;
 
 })
 app.post('/login', (req, res) => logowanie(req, res));
