@@ -244,6 +244,7 @@ class Game {
                     collider.material = this.materials.tiles.hover
                 }
 
+                this.detectVictory()
 
 
             }
@@ -283,7 +284,7 @@ class Game {
                     let anim = new TWEEN.Tween(pon.position).to({ x: position.x, y: position.y, z: position.z }, 400).repeat(0).easing(TWEEN.Easing.Elastic.InOut).onUpdate(() => { }).onComplete(() => { console.log("koniec animacji") })
                     anim.start()
 
-                    // console.table(this.tab)
+                    // console.table(this.tab)     
                     this.detectVictory()
                 }
 
@@ -293,20 +294,21 @@ class Game {
     }
 
     detectVictory = () => {
+        this.numberOfDisabledBlocks = 0
+
         for (let x = 0; x < this.tab.length; x++) {
             for (let z = 0; z < this.tab[x].length; z++) {
                 if (this.tab[x][z] == this.color) {
-                    console.warn();
-
                     if (this.tab[x + 1]?.[z] != null && this.tab[x - 1]?.[z] != null && this.tab[x]?.[z + 1] != null && this.tab[x]?.[z - 1] != null) {
                         this.numberOfDisabledBlocks++;
+                        console.warn(this.numberOfDisabledBlocks, this.playerBlocksPlaced);
                     }
 
                 }
             }
         }
 
-        if (this.playerBlocksPlaced > 0) {
+        if (this.playerBlocksPlaced > 5) {
             if (this.numberOfDisabledBlocks == this.playerBlocksPlaced) {
                 this.defeat = true
                 alert('defeat')

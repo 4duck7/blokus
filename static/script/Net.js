@@ -39,7 +39,7 @@ class Net {
 
                     if (this.resetFlag == true) {
                         clearInterval(repeat)
-                                              
+
                         this.resetFlag = false
                     }
 
@@ -72,7 +72,7 @@ class Net {
                 if (JSON.parse(result).id == 1) { game.setCamera(-50); game.setColor(1); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
                 if (JSON.parse(result).id == 3) { }
 
-                this.console.log(this.przeciwnik)
+                console.log(this.przeciwnik)
 
             }
         }
