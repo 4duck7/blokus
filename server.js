@@ -16,7 +16,10 @@ let kolor = ['niebieskimi', 'rozowymi']
 let upcomingMoves = []
 let recentMove;
 
-
+let playerOneTurn = true
+let playerOneMoves = 0
+let playerTwoMoves = 0
+let remainingMoves = 3;
 
 app.use(express.static('static'))
 

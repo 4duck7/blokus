@@ -66,7 +66,8 @@ class Game {
             }
         }
 
-
+        this.playerBlocksPlaced = 0
+        this.blocksEachTurn = 3
 
     }
 
@@ -136,10 +137,6 @@ class Game {
                             child.material = this.materials.colors.blue;
                         }
                     });
-
-
-
-
                     // game.scene.add(gltf.scene)                   
                     parent.add(model);
                 }, undefined, (error) => console.error(error));
@@ -164,9 +161,9 @@ class Game {
         let plansza, pionki
         this.scene.children.forEach(child => { if (child.name == 'plansza') plansza = child.children })
         this.scene.children.forEach(child => { if (child.name == 'pionki') pionki = child.children })
-        console.log(plansza)
+        // console.log(plansza)
 
-        if (!net.toggleHold) {
+        if (!net.toggleHold && net.playerTurn) {
             if (intersects.length > 0) {
 
                 let collider = intersects[0].object
@@ -225,18 +222,20 @@ class Game {
         pionki.forEach(pon => {
             if (pon.name == 'pon-' + x + '-' + z) {
 
-                const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
-                switch (color) {
-                    case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
-                    case 1: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.pink; } }); break;
+                if (this.tab[x][z] == null) {
+                    const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
+                    switch (color) {
+                        case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
+                        case 1: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.pink; } }); break;
+                    }
+
+                    this.tab[x][z] = color
+
+                    let anim = new TWEEN.Tween(pon.position).to({ x: position.x, y: position.y, z: position.z }, 400).repeat(0).easing(TWEEN.Easing.Elastic.InOut).onUpdate(() => { console.log(pon.position) }).onComplete(() => { console.log("koniec animacji") })
+                    anim.start()
+
+                    console.table(this.tab)
                 }
-
-                this.tab[x][z] = color
-
-                let anim = new TWEEN.Tween(pon.position).to({ x: position.x, y: position.y, z: position.z }, 400).repeat(0).easing(TWEEN.Easing.Elastic.InOut).onUpdate(() => { console.log(pon.position) }).onComplete(() => { console.log("koniec animacji") })
-                anim.start()
-
-                console.table(this.tab)
 
             }
         })
