@@ -92,7 +92,7 @@ function ruch(req, res) {
         upcomingMoves.push(JSON.parse(data))
         ruchy++;
         res.end(data)
-        if (ruchy % 3 == 0) {
+        if (ruchy % 5 == 0) {
             switch (playerTurn) {
                 case 0: playerTurn = 1; break;
                 case 1: playerTurn = 0; break;

@@ -90,6 +90,10 @@ class Net {
 
                         // console.log(this.turaGracza);
 
+                        if (game.defeat = true) {
+                            
+                        }
+
                     }
 
                 })

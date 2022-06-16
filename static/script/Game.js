@@ -24,6 +24,8 @@ class Game {
         this.controls.maxDistance = 300;
         this.controls.maxPolarAngle = Math.PI / 2;
 
+        this.defeat = false;
+
         this.color = 0
         this.selectedShape = 0
 
@@ -193,7 +195,6 @@ class Game {
                             if (this.tab[x]?.[z + 1] == this.color) canDeploy = true;
                             if (this.tab[x]?.[z - 1] == this.color) canDeploy = true;
 
-
                             // if (this.tab[intel[1]]?.[intel[2]] == null) canDeploy = true; console.log(this.tab[intel[1]]?.[intel[2]])
 
                             if (canDeploy) {
@@ -287,6 +288,19 @@ class Game {
             }
         })
 
+    }
+
+    canMove = () => {
+        for (let x = 0; x < 15; x++) {
+            for (let z = 0; z < 15; z++) {
+                if (this.tab[x][z] == this.color) {
+                    if (this.tab[x + 1]?.[z] == this.color) this.defeat = true;
+                    if (this.tab[x - 1]?.[z] == this.color) this.defeat = true;
+                    if (this.tab[x]?.[z + 1] == this.color) this.defeat = true;
+                    if (this.tab[x]?.[z - 1] == this.color) this.defeat = true;
+                }
+            }
+        }
     }
 
 }
