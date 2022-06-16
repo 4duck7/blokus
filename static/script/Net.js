@@ -3,12 +3,22 @@ class Net {
     constructor() {
         this.input = document.getElementById("userLog")
         this.loginBt = document.getElementById("play")
+        this.resetBt = document.getElementById("reset")
         this.console = document.getElementById('console')
 
         this.toggleHold = true
         this.turaGracza;
 
         this.przeciwnik;
+
+        this.resetFlag = false
+        this.resetBt.onclick = () => {
+            this.resetFlag = true
+            let data = { reset: this.resetFlag }
+            fetch("/reset", { method: "post", body: JSON.stringify(data) })
+                .then(response => response.json())
+                .catch(error => console.log(error));
+        }
 
         this.loginBt.onclick = () => {
             console.log(this.input.value)
@@ -26,6 +36,12 @@ class Net {
                             this.handleStart(result, repeat)
                         })
                         .catch(error => console.log(error));
+
+                    if (this.resetFlag == true) {
+                        clearInterval(repeat)
+                                              
+                        this.resetFlag = false
+                    }
 
                 }, 1000)
             }
@@ -55,6 +71,8 @@ class Net {
                 if (JSON.parse(result).id == 0) { game.setCamera(50); game.setColor(0); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
                 if (JSON.parse(result).id == 1) { game.setCamera(-50); game.setColor(1); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
                 if (JSON.parse(result).id == 3) { }
+
+                this.console.log(this.przeciwnik)
 
             }
         }
@@ -90,15 +108,16 @@ class Net {
 
                         // console.log(this.turaGracza);
 
-                        if (game.defeat = true) {
-                            
-                        }
 
                     }
 
                 })
                 .catch(error => console.log(error));
         }, 200)
+    }
+
+    sendDefeat = () => {
+
     }
 
 }

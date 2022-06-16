@@ -137,6 +137,17 @@ function requestmove(req, res) {
 }
 
 //tu wszystkie app.post
+app.post("/reset", (req, res) => {
+    users = []
+    registeredUsers = []
+    console.log(users, registeredUsers)
+    gameOn = false
+    player1visits = 0
+    player2visits = 0
+    kolor = ['niebieskimi', 'rozowymi']
+    upcomingMoves = []
+
+})
 app.post('/login', (req, res) => logowanie(req, res));
 app.post('/requestmove', (req, res) => requestmove(req, res));
 app.post('/move', (req, res) => ruch(req, res));

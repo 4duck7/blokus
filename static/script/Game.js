@@ -70,6 +70,7 @@ class Game {
         }
 
         this.playerBlocksPlaced = 0
+        this.numberOfDisabledBlocks = 0
 
     }
 
@@ -283,6 +284,7 @@ class Game {
                     anim.start()
 
                     // console.table(this.tab)
+                    this.detectVictory()
                 }
 
             }
@@ -290,17 +292,27 @@ class Game {
 
     }
 
-    canMove = () => {
-        for (let x = 0; x < 15; x++) {
-            for (let z = 0; z < 15; z++) {
+    detectVictory = () => {
+        for (let x = 0; x < this.tab.length; x++) {
+            for (let z = 0; z < this.tab[x].length; z++) {
                 if (this.tab[x][z] == this.color) {
-                    if (this.tab[x + 1]?.[z] == this.color) this.defeat = true;
-                    if (this.tab[x - 1]?.[z] == this.color) this.defeat = true;
-                    if (this.tab[x]?.[z + 1] == this.color) this.defeat = true;
-                    if (this.tab[x]?.[z - 1] == this.color) this.defeat = true;
+                    console.warn();
+
+                    if (this.tab[x + 1]?.[z] != null && this.tab[x - 1]?.[z] != null && this.tab[x]?.[z + 1] != null && this.tab[x]?.[z - 1] != null) {
+                        this.numberOfDisabledBlocks++;
+                    }
+
                 }
             }
         }
+
+        if (this.playerBlocksPlaced > 0) {
+            if (this.numberOfDisabledBlocks == this.playerBlocksPlaced) {
+                this.defeat = true
+                alert('defeat')
+            }
+        }
+
     }
 
 }
