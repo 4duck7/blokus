@@ -16,10 +16,8 @@ let kolor = ['niebieskimi', 'rozowymi']
 let upcomingMoves = []
 let recentMove;
 
-let playerOneTurn = true
-let playerOneMoves = 0
-let playerTwoMoves = 0
-let remainingMoves = 3;
+let playerTurn = getRandomInt(2)
+let ruchy = 0
 
 app.use(express.static('static'))
 
@@ -58,12 +56,11 @@ function logowanie(req, res) {
                         for (let i = 0; i < users.length; i++) {
                             users[i].launch = true;
                             users[i].status = 'gra'
-                            let oponent = ''
                             switch (i) {
-                                case 0: oponent = users[1].username; break;
-                                case 1: oponent = users[0].username; break;
+                                case 0: users[i].oponent = users[1].username; break;
+                                case 1: users[i].oponent = users[0].username; break;
                             }
-                            users[i].message = users[i].username + ', grasz pionkami ' + kolor[i] + ' przeciwko ' + oponent
+                            users[i].message = users[i].username + ', grasz pionkami ' + kolor[i] + ' przeciwko ' + users[i].oponent
                         }
 
                         if (json.username == users[0].username) res.end(JSON.stringify(JSON.stringify(users[0]))); player1visits++;
@@ -82,6 +79,10 @@ function logowanie(req, res) {
     }
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
 function ruch(req, res) {
     let data = ''
     req.on('data', chunk => { data += chunk })
@@ -89,7 +90,14 @@ function ruch(req, res) {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
         upcomingMoves.push(JSON.parse(data))
         upcomingMoves.push(JSON.parse(data))
+        ruchy++;
         res.end(data)
+        if (ruchy % 3 == 0) {
+            switch (playerTurn) {
+                case 0: playerTurn = 1; break;
+                case 1: playerTurn = 0; break;
+            }
+        }
     })
 }
 
@@ -105,17 +113,24 @@ function requestmove(req, res) {
             console.log(upcomingMoves)
 
             let object = upcomingMoves[0]
+            object.turn = playerTurn
+
             if (object != recentMove) {
                 recentMove = object
+
+
+                console.log(object)
 
                 res.end(JSON.stringify(object));
                 upcomingMoves.splice(0, 1)
             } else {
-                res.end(JSON.stringify({ x: null, z: null, color: null }))
+                res.end(JSON.stringify({ x: null, z: null, color: null, turn: playerTurn }))
             }
 
         } else {
-            res.end(data)
+            let object = JSON.parse(data)
+            object.turn = playerTurn
+            res.end(JSON.stringify(object));
         }
 
     })

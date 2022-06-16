@@ -6,7 +6,9 @@ class Net {
         this.console = document.getElementById('console')
 
         this.toggleHold = true
-        this.playerTurn = true
+        this.turaGracza;
+
+        this.przeciwnik;
 
         this.loginBt.onclick = () => {
             console.log(this.input.value)
@@ -50,8 +52,8 @@ class Net {
 
                 clearInterval(interval);
 
-                if (JSON.parse(result).id == 0) { game.setCamera(50); game.setColor(0); document.getElementById('logowanie').style.display = 'none'; }
-                if (JSON.parse(result).id == 1) { game.setCamera(-50); game.setColor(1); document.getElementById('logowanie').style.display = 'none'; }
+                if (JSON.parse(result).id == 0) { game.setCamera(50); game.setColor(0); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
+                if (JSON.parse(result).id == 1) { game.setCamera(-50); game.setColor(1); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
                 if (JSON.parse(result).id == 3) { }
 
             }
@@ -77,9 +79,17 @@ class Net {
             fetch("/requestmove", { method: "post", body: JSON.stringify(data) })
                 .then(response => response.json())
                 .then(json => {
-                    // console.log(json)
+                    console.log(json)
                     if (JSON.stringify(json).length > 0) {
                         game.dropTile(json.x, json.z, json.color);
+
+                        console.log(json.turn, game.color, this.turaGracza)
+                        if (!this.toggleHold) {
+                            if (json.turn == game.color) { this.turaGracza = true; ui.tura.style.display = 'none'; } else { this.turaGracza = false; setTimeout(() => ui.tura.style.display = 'block', 500) }
+                        }
+
+                        console.log(this.turaGracza);
+
                     }
 
                 })

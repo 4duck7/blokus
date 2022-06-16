@@ -163,7 +163,7 @@ class Game {
         this.scene.children.forEach(child => { if (child.name == 'pionki') pionki = child.children })
         // console.log(plansza)
 
-        if (!net.toggleHold && net.playerTurn) {
+        if (!net.toggleHold && net.turaGracza) {
             if (intersects.length > 0) {
 
                 let collider = intersects[0].object
