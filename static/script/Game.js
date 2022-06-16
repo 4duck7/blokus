@@ -63,7 +63,7 @@ class Game {
             if (e.keyCode === 13) {
                 if (this.color == 1) { this.color = 0; }
                 else if (this.color == 0) { this.color = 1; }
-                console.log(this.color)
+                // console.log(this.color)
             }
         }
 
@@ -79,7 +79,7 @@ class Game {
         this.renderer.render(this.scene, this.camera);
         TWEEN.update();
 
-        console.log("render going")
+        // console.log("render going")
     }
 
     resize = () => {
@@ -182,13 +182,29 @@ class Game {
                             }
                         } else {
                             console.table(this.tab)
-                            net.sendMove(intel[1], intel[2], this.color)
-                            this.playerBlocksPlaced++;
 
-                            if (this.tab[intel[1] + 1]?.[intel[2]] == this.color || this.tab[intel[1] - 1]?.[intel[2]] == this.color || this.tab[intel[1]]?.[intel[2] + 1] == this.color || this.tab[intel[1]]?.[intel[2] - 1] == this.color) {
-                                document.querySelector('#console').innerHTML = 'touches'
+                            let canDeploy = false;
+
+                            // if (this.tab[intel[1] + 1]?.[intel[2]] == undefined || this.tab[intel[1] + 1]?.[intel[2]] == this.color) canDeploy = true;
+                            // if (this.tab[intel[1] - 1]?.[intel[2]] == undefined || this.tab[intel[1] - 1]?.[intel[2]] == this.color) canDeploy = true;
+                            // if (this.tab[intel[1]]?.[intel[2] + 1] == undefined || this.tab[intel[1]]?.[intel[2] + 1] == this.color) canDeploy = true;
+                            // if (this.tab[intel[1]]?.[intel[2] - 1] == undefined || this.tab[intel[1]]?.[intel[2] - 1] == this.color) canDeploy = true;
+
+                            console.log(intel[1])
+
+                            if ((intel[1] != 0 && intel[2] != 14) && (intel[1] != 14 && intel[2] != 0)) {
+                                if (game.tab[intel[1] + 1][intel[2]] == this.color) canDeploy = true; console.log(game.tab[intel[1] + 1]?.[intel[2]]);
+                                if (game.tab[intel[1] - 1][intel[2]] == this.color) canDeploy = true; console.log(game.tab[intel[1] - 1]?.[intel[2]]);
+                                if (game.tab[intel[1]][intel[2] + 1] == this.color) canDeploy = true; console.log(game.tab[intel[1]]?.[intel[2] + 1]);
+                                if (game.tab[intel[1]][intel[2] - 1] == this.color) canDeploy = true; console.log(game.tab[intel[1]]?.[intel[2] - 1]);
+                            }
+                            if (canDeploy) {
+                                net.sendMove(intel[1], intel[2], this.color)
+                                this.playerBlocksPlaced++;
+
+                                console.warn('touches ' + canDeploy)
                             } else {
-                                document.querySelector('#console').innerHTML = 'Nie mozesz postawic bloku tutaj<br>Spróbuj postawić go tak aby dotykał swojego koloru.'
+                                console.warn('unable ' + canDeploy)
                             }
 
                         }
@@ -264,10 +280,10 @@ class Game {
 
                     this.tab[x][z] = color
 
-                    let anim = new TWEEN.Tween(pon.position).to({ x: position.x, y: position.y, z: position.z }, 400).repeat(0).easing(TWEEN.Easing.Elastic.InOut).onUpdate(() => { console.log(pon.position) }).onComplete(() => { console.log("koniec animacji") })
+                    let anim = new TWEEN.Tween(pon.position).to({ x: position.x, y: position.y, z: position.z }, 400).repeat(0).easing(TWEEN.Easing.Elastic.InOut).onUpdate(() => { }).onComplete(() => { console.log("koniec animacji") })
                     anim.start()
 
-                    console.table(this.tab)
+                    // console.table(this.tab)
                 }
 
             }

@@ -79,16 +79,16 @@ class Net {
             fetch("/requestmove", { method: "post", body: JSON.stringify(data) })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json)
+                    // console.log(json)
                     if (JSON.stringify(json).length > 0) {
                         game.dropTile(json.x, json.z, json.color);
 
-                        console.log(json.turn, game.color, this.turaGracza)
+                        // console.log(json.turn, game.color, this.turaGracza)
                         if (!this.toggleHold) {
                             if (json.turn == game.color) { this.turaGracza = true; ui.tura.style.display = 'none'; } else { this.turaGracza = false; setTimeout(() => ui.tura.style.display = 'block', 500) }
                         }
 
-                        console.log(this.turaGracza);
+                        // console.log(this.turaGracza);
 
                     }
 
