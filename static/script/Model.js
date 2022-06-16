@@ -1,6 +1,6 @@
 // @ts-nocheck
 class Model {
-    constructor() {
+    constructor(posx, posy, posz) {
        
     }
 }

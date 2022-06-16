@@ -41,7 +41,7 @@ class Net {
                     ui.oczekiwanie.style.display = 'block'; break;
                 case 'gra':
                     ui.oczekiwanie.style.display = 'none';
-                    ui.kamera.style.display = 'block'; break;
+                    ui.kamera.style.display = 'block'; break;                
             }
 
 

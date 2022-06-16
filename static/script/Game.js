@@ -13,16 +13,6 @@ class Game {
         this.camera.lookAt(this.scene.position)
 
         this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-        this.loader = new THREE.GLTFLoader()
-        this.loader.load('../models/char.glb', function (glb) {
-            console.log(glb)
-            const root = glb.scene;
-            this.scene.add(root)
-        }, function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) = "%loaded")
-        }, function (error) {
-            console.log('an Error occured')
-        })
 
         // this.axes = new THREE.AxesHelper(100)
         // this.scene.add(this.axes)
@@ -31,7 +21,7 @@ class Game {
         this.controls.dampingFactor = 0.05;
         this.controls.screenSpacePanning = false;
         // this.controls.minDistance = 100;
-        // this.controls.maxDistance = 500;
+        this.controls.maxDistance = 300;
         this.controls.maxPolarAngle = Math.PI / 2;
 
         this.color = 0
@@ -133,11 +123,27 @@ class Game {
             for (let y = 0; y < size; y++) {
                 let position = { x: 2.5 * x, y: 2.5 * y }
 
-                let cube = new Cube(2.3, 2, 2.3);
-                cube.name = 'pon-' + x + '-' + y
-                cube.position.set(position.x, 50, position.y);
-                cube.material = this.materials.tiles.selected;
-                parent.add(cube);
+                this.loader = new THREE.GLTFLoader();
+                this.loader.load('../models/kostka.glb', (gltf) => {
+                    const model = gltf.scene
+
+                    model.position.set(position.x, 100, position.y)
+                    model.scale.set(0.5, 0.5, 0.5);
+                    model.name = 'pon-' + x + '-' + y
+
+                    model.traverse(child => {
+                        if (child.isMesh) {
+                            child.material = this.materials.colors.blue;
+                        }
+                    });
+
+
+
+
+                    // game.scene.add(gltf.scene)                   
+                    parent.add(model);
+                }, undefined, (error) => console.error(error));
+
                 parent.position.set(-(position.x / 2), 0, -(position.y / 2));
 
                 this.tab[x][y] = null
@@ -186,6 +192,7 @@ class Game {
         this.scene.children.forEach(child => { if (child.name == 'plansza') this.plansza = child.children })
         this.plansza.forEach(plytka => plytka.material = this.materials.tiles.basic)
 
+
         if (intersects.length > 0) {
 
             let collider = intersects[0].object
@@ -218,10 +225,10 @@ class Game {
         pionki.forEach(pon => {
             if (pon.name == 'pon-' + x + '-' + z) {
 
-                const position = { x: 2.5 * x, y: 1, z: 2.5 * z }
+                const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
                 switch (color) {
-                    case 0: pon.material = this.materials.colors.blue; break;
-                    case 1: pon.material = this.materials.colors.pink; break;
+                    case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
+                    case 1: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.pink; } }); break;
                 }
 
                 this.tab[x][z] = color
