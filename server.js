@@ -16,6 +16,8 @@ let kolor = ['niebieskimi', 'rozowymi']
 let upcomingMoves = []
 let recentMove;
 
+
+
 app.use(express.static('static'))
 
 //tu wszystkie funkcje
