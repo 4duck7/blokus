@@ -67,7 +67,6 @@ class Game {
         }
 
         this.playerBlocksPlaced = 0
-        this.blocksEachTurn = 3
 
     }
 
@@ -195,8 +194,16 @@ class Game {
             let collider = intersects[0].object
 
             if (collider.name.startsWith('tile')) {
+                let intel = collider.name.split('-')
 
-                collider.material = this.materials.tiles.hover
+                if (this.playerBlocksPlaced == 0) {
+                    if ((intel[1] == 0 || intel[2] == 14) || (intel[1] == 14 || intel[2] == 0)) {
+                        collider.material = this.materials.tiles.hover
+                    }
+                }
+
+
+
             }
 
         }
