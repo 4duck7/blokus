@@ -30,7 +30,8 @@ class Game {
         this.materials = {
             tiles: {
                 basic: new THREE.MeshPhongMaterial({ color: 0xf2f2f2, specular: 0xffffff }),
-                hover: new THREE.MeshPhongMaterial({ color: 0xa9a9a9, specular: 0xffffff })
+                hover: new THREE.MeshPhongMaterial({ color: 0xa9a9a9, specular: 0xffffff }),
+                border: new THREE.MeshPhongMaterial({ color: 0xff6347, specular: 0xffffff }),
             },
             colors: {
                 blue: new THREE.MeshPhongMaterial({ color: 0x1e90ff, specular: 0xffffff }),
@@ -170,7 +171,27 @@ class Game {
                 if (collider.name.startsWith('tile')) {
                     let intel = collider.name.split('-')
 
-                    net.sendMove(intel[1], intel[2], this.color)
+                    if (this.tab[intel[1]][intel[2]] == null) {
+                        if (this.playerBlocksPlaced == 0) {
+                            if ((intel[1] == 0 || intel[2] == 14) || (intel[1] == 14 || intel[2] == 0)) {
+                                net.sendMove(intel[1], intel[2], this.color)
+                                this.playerBlocksPlaced++;
+                                document.querySelector('#console').innerHTML = ''
+                            } else {
+                                document.querySelector('#console').innerHTML = 'Nie mozesz postawic bloku tutaj<br>Spróbuj zacząć po zewnętrznej.'
+                            }
+                        } else {
+                            console.table(this.tab)
+                            if (this.tab[intel[1] + 1]?.[intel[2]] == this.color || this.tab[intel[1] - 1]?.[intel[2]] == this.color || this.tab[intel[1]]?.[intel[2] + 1] == this.color || this.tab[intel[1]]?.[intel[2] - 1] == this.color) {
+                                net.sendMove(intel[1], intel[2], this.color)
+                                this.playerBlocksPlaced++;
+                                document.querySelector('#console').innerHTML = 'touches'
+                            } else {
+                                document.querySelector('#console').innerHTML = 'Nie mozesz postawic bloku tutaj<br>Spróbuj postawić go tak aby dotykał swojego koloru.'
+                            }
+
+                        }
+                    }
 
                 }
             }
@@ -198,8 +219,12 @@ class Game {
 
                 if (this.playerBlocksPlaced == 0) {
                     if ((intel[1] == 0 || intel[2] == 14) || (intel[1] == 14 || intel[2] == 0)) {
+                        collider.material = this.materials.tiles.border
+                    } else {
                         collider.material = this.materials.tiles.hover
                     }
+                } else {
+                    collider.material = this.materials.tiles.hover
                 }
 
 
