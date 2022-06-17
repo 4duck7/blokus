@@ -274,10 +274,27 @@ class Game {
             if (pon.name == 'pon-' + x + '-' + z) {
 
                 if (this.tab[x][z] == 3) {
-                    const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
+                    const position = {
+                        x: 2.5 * x,
+                        y: 0.5,
+                        z: 2.5 * z
+                    }
+
                     switch (color) {
-                        case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
-                        case 1: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.pink; } }); break;
+                        case 0:
+                            pon.traverse(child => {
+                                if (child.isMesh) {
+                                    child.material = this.materials.colors.blue;
+                                }
+                            });
+                            break;
+                        case 1:
+                            pon.traverse(child => {
+                                if (child.isMesh) {
+                                    child.material = this.materials.colors.pink;
+                                }
+                            });
+                            break;
                     }
 
                     this.tab[x][z] = color
