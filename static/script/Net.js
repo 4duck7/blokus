@@ -58,10 +58,12 @@ class Net {
             switch (JSON.parse(result).status) {
                 case 'wait':
                     ui.logowanie.style.display = 'none';
-                    ui.oczekiwanie.style.display = 'block'; break;
+                    ui.oczekiwanie.style.display = 'block';
+                    break;
                 case 'gra':
                     ui.oczekiwanie.style.display = 'none';
-                    ui.kamera.style.display = 'block'; break;
+                    ui.kamera.style.display = 'block';
+                    break;
             }
 
 

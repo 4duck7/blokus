@@ -204,7 +204,7 @@ class Game {
 
                                 console.warn('touches ' + canDeploy)
                             } else {
-                                console.warn('unable to touch ' + canDeploy)
+                                console.warn('unable ' + canDeploy)
                             }
 
                         }
@@ -264,28 +264,20 @@ class Game {
     dropTile = (x, z, color) => {
 
         let pionki;
-        this.scene.children.forEach(child => { if (child.name == 'pionki') pionki = child.children })
+        this.scene.children.forEach(child => {
+            if (child.name == 'pionki') {
+                pionki = child.children
+            }
+        })
 
         pionki.forEach(pon => {
             if (pon.name == 'pon-' + x + '-' + z) {
 
                 if (this.tab[x][z] == 3) {
-                    const position = { x: 2.5 * x, y: 0.26, z: 2.5 * z }
+                    const position = { x: 2.5 * x, y: 0.5, z: 2.5 * z }
                     switch (color) {
-                        case 0:
-                            pon.traverse(child => {
-                                if (child.isMesh) {
-                                    child.material = this.materials.colors.blue;
-                                }
-                            });
-                            break;
-                        case 1:
-                            pon.traverse(child => {
-                                if (child.isMesh) {
-                                    child.material = this.materials.colors.pink;
-                                }
-                            });
-                            break;
+                        case 0: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.blue; } }); break;
+                        case 1: pon.traverse(child => { if (child.isMesh) { child.material = this.materials.colors.pink; } }); break;
                     }
 
                     this.tab[x][z] = color
@@ -323,7 +315,7 @@ class Game {
             if (this.numberOfDisabledBlocks == this.playerBlocksPlaced) {
                 this.defeat = true
                 net.sendDefeat()
-                // console.error('defeat')
+                console.error('defeat')
             }
         }
 
