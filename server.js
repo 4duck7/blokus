@@ -110,8 +110,6 @@ function requestmove(req, res) {
     req.on('end', () => {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
 
-
-
         if (upcomingMoves.length > 0) {
 
             console.log(data)
@@ -119,7 +117,6 @@ function requestmove(req, res) {
 
             let object = upcomingMoves[0]
             object.turn = playerTurn
-
 
             if (object != recentMove) {
                 recentMove = object

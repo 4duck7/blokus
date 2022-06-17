@@ -69,9 +69,21 @@ class Net {
 
                 clearInterval(interval);
 
-                if (JSON.parse(result).id == 0) { game.setCamera(50); game.setColor(0); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
-                if (JSON.parse(result).id == 1) { game.setCamera(-50); game.setColor(1); document.getElementById('logowanie').style.display = 'none'; this.przeciwnik = JSON.parse(result).oponent; document.querySelector('#nick').innerHTML = this.przeciwnik }
-                if (JSON.parse(result).id == 3) { }
+                if (JSON.parse(result).id == 0) {
+                    game.setCamera(50);
+                    game.setColor(0);
+                    document.getElementById('logowanie').style.display = 'none';
+                    this.przeciwnik = JSON.parse(result).oponent;
+                    document.querySelector('#nick').innerHTML = this.przeciwnik
+                }
+                if (JSON.parse(result).id == 1) {
+                    game.setCamera(-50);
+                    game.setColor(1);
+                    document.getElementById('logowanie').style.display = 'none';
+                    this.przeciwnik = JSON.parse(result).oponent;
+                    document.querySelector('#nick').innerHTML = this.przeciwnik
+                }
+                // if (JSON.parse(result).id == 3) { }
 
                 console.log(this.przeciwnik)
 

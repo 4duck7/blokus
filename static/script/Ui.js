@@ -19,7 +19,12 @@ class Ui {
         this.win.style.display = 'none'
 
         this.ok = document.querySelector('#ok')
-        this.ok.onclick = () => { this.kamera.style.display = 'none'; setTimeout(() => net.toggleHold = false, 500) }
+        this.ok.onclick = () => {
+            this.kamera.style.display = 'none';
+            setTimeout(() => {
+                net.toggleHold = false
+            }, 500)
+        }
 
 
     }
